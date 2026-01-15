@@ -1,46 +1,43 @@
 import React, { useState } from "react";
+import FilterItems from "./FilterItems";
 
-export default function Filter({ onChange }) {
-  
+
+export default function Filter({ onChange,getdataByFilter }) {
   const filterOptions = [
     { key: "service", label: "Service" },
-    { key: "instanceType", label: "Instance Type" },
-    { key: "accountId", label: "Account ID" },
-    { key: "usageType", label: "Usage Type" },
+    { key: "instance_type", label: "Instance Type" },
+    { key: "account_id", label: "Account ID" },
+    { key: "usage_type", label: "Usage Type" },
     { key: "platform", label: "Platform" },
     { key: "region", label: "Region" },
-    { key: "usageGroup", label: "Usage Type Group" },
-    { key: "purchaseOption", label: "Purchase Option" },
-    { key: "apiOperation", label: "API Operation" },
+    { key: "usage_type_group", label: "Usage Type Group" },
+    { key: "purchase_option", label: "Purchase Option" },
+    { key: "api_operation", label: "API Operation" },
     { key: "resource", label: "Resource" },
-    { key: "chargeType", label: "Charge Type" },
-    { key: "availabilityZone", label: "Availability Zone" },
+    { key: "availability_zone", label: "Availability Zone" },
     { key: "tenancy", label: "Tenancy" },
-    { key: "legalEntity", label: "Legal Entity" },
-    { key: "billingEntity", label: "Billing Entity" },
+    { key: "legal_entity", label: "Legal Entity" },
+    { key: "billing_entity", label: "Billing Entity" },
   ];
 
-  const [selectedFilters, setSelectedFilters] = useState({});
+  const [selectedValues, setSelectedValues] = useState([]);
 
-  const toggleFilter = (filterKey) => {
-    const updated = {
-      ...selectedFilters,
-      [filterKey]: !selectedFilters[filterKey],
-    };
 
-    setSelectedFilters(updated);
-    onChange && onChange(updated);
+  const applyFilter = (key, values) => {
+    const updated = [ ...selectedValues, values ];
+    setSelectedValues(updated);
+    onChange(updated);
   };
 
   const resetFilters = () => {
     const cleared = {};
-    filterOptions.forEach((f) => (cleared[f.key] = false));
-    setSelectedFilters(cleared);
-    onChange && onChange(cleared);
+    filterOptions.forEach(f => (cleared[f.key] = []));
+    setSelectedValues(cleared);
+    onChange(cleared);
   };
 
   return (
-    <div className="w-88 border-l bg-white p-4 h-full overflow-y-auto">
+    <div className="w-88  bg-white p-4 h-full overflow-y-auto">
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-semibold text-gray-700 text-lg">Filters</h2>
         <button
@@ -51,27 +48,16 @@ export default function Filter({ onChange }) {
         </button>
       </div>
 
-
-      <div className="space-y-3">
-        {filterOptions.map((filter) => (
-          <div
-            key={filter.key}
-            className="flex items-center justify-between border-b border-gray-300 pb-3"
-          >
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={selectedFilters[filter.key] || false}
-                onChange={() => toggleFilter(filter.key)}
-                className="w-4 h-4 border-2 border-gray-300 rounded-xs appearance-none checked:bg-blue-500 checked:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-              />
-              <span className="text-gray-600 text-[13px] font-bold">{filter.label}</span>
-            </label>
-
-            <span className="text-gray-400 text-xs">Include Only</span>
-          </div>
-        ))}
-      </div>
+      {filterOptions.map(filter => (
+        <FilterItems
+          key={filter.key}
+          filterKey={filter.key}
+          label={filter.label}
+          value={selectedValues[filter.key] || []}
+          onChange={applyFilter}
+          getdataByFilter={getdataByFilter}
+        />
+      ))}
     </div>
   );
 }

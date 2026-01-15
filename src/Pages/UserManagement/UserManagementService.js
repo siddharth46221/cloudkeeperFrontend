@@ -1,46 +1,41 @@
-import axios from "axios";
-
-const Base_URL= "http://localhost:8080/users"
-
-const authHeader= () => {
-     const token= localStorage.getItem("token");
-     return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-     };
-};
+import app from "../../Utils/Interseptor";
 
 export const addNewUser = async (data) => {
-    data.password= "123";
-      try{
-           const response = await axios.post(`${Base_URL}/create`,data, authHeader());
-           return response.status;
-      }
-      catch(err){
-        console.error("Error creating user:", err);
-        throw err;
-      }
+  data.password = "123";
+  try {
+    const response = await app.post(`/users/create`, data);
+    return response.status;
+  } catch (err) {
+    console.error("Error creating user:", err);
+    return err;
+  }
 };
 
-export const getAllUsers = async () =>{
-     try{
-        const response = await axios.get(`${Base_URL}/all`, authHeader());
-        return response.data;
-     }
-     catch(err){
-        console.error("Error getting all users:", err);
-        throw err;
-     }
-}
+export const getAllUsers = async () => {
+  try {
+    const response = await app.get(`/users/all`);
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
 
-export const editUser = async (id, data) =>{
-   try{
-      const response = await axios.put(`${Base_URL}/edit/${id}`, data, authHeader());
-      return response.status;
-   }
-   catch(err){
-      console.error("Error editing user:", err);
-      throw err;
-   }
-}
+export const editUser = async (id, data) => {
+  try {
+    const response = await app.put(`/users/edit/${id}`, data);
+    return response.status;
+  } catch (err) {
+    console.error("Error editing user:", err);
+    return err.response;
+  }
+};
+
+export const allAccounts = async () => {
+  try {
+    const response = await app.get(`/accounts/all`);
+    return response;
+  } catch (err) {
+    console.error("Error getting all accounts:", err);
+    return err.response;
+  }
+};

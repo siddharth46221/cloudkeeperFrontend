@@ -5,16 +5,13 @@ export const LoginService = async (data) => {
 
    try{
          const response=  await axios.post('http://localhost:8080/login', data)
-
-
         
          if(response.data ){
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem("user", JSON.stringify(response.data));
           return response;
          }
-        
-          
+ 
       }
         
       catch(err){

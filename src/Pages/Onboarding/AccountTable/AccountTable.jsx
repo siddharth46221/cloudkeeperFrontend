@@ -7,14 +7,14 @@ const columns = [
   { label: "AWS ID", key: "awsId" },
 ];
 
-export const AccountTable = () => {
+export const AccountTable = ({AccountsData}) => {
  
- const tableData = null;
+ const tableData = AccountsData;
   const formattedRows = (tableData || []).map((user) => ({
     ...user,
 
-    arnNumber: user.arnnumber || "-",
-    AccountName: user.AccountName || "-",
+    arnNumber: user.arnNumber || "-",
+    AccountName: user.accountName || "-",
     awsId: user.awsId || "-",
 
 

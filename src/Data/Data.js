@@ -46,6 +46,14 @@ const code= {
 }
 
 const code2= {"role":"CK-Tuner-Role-dev2"};
+const code3= {"role":"CK-Tuner-Role-dev2"};
+const code4= {"role":"275595855473"};
+
+const ROLES = {
+  ADMIN: "ADMIN",
+  READONLY: "READONLY",
+  CUSTOMER: "CUSTOMER",
+};
 
 
-export {steps, code, code2}
+export {steps, code, code2, code3,code4, ROLES}

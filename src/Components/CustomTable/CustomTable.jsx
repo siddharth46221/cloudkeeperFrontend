@@ -57,7 +57,7 @@ const CustomTable = ({
                                 border-b border-gray-200
                                 ${cellClass}`}
                   >
-                    {row[col.key] ?? ""}
+                    {col.render? col.render(row) : row[col.key] ?? ""}
                   </td>
                 ))}
               </tr>

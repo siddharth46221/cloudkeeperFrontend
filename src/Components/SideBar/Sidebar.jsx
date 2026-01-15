@@ -3,20 +3,25 @@ import { FaUserCog } from "react-icons/fa";
 import { TbClockDollar } from "react-icons/tb";
 import { SiAmazonwebservices } from "react-icons/si";
 import { BsPersonBadgeFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 export const Sidebar = ({collapsed}) => {
   
+  const role = useSelector((state) => state.UserData.value?.role);
 
-  const menu = [
+ const menu1 = [
     { to: "/dashboard/users", label: "Users", icon: <FaUserCog /> },
     { to: "/dashboard/initial-onboarding", label: "Onboarding", icon: <BsPersonBadgeFill /> },
     { to: "/dashboard/cost-explorer", label: "Cost Explorer", icon: <TbClockDollar /> },
-    {
-      to: "/dashboard/aws-services",
-      label: "AWS Services",
-      icon: <SiAmazonwebservices />,
-    },
+    { to: "/dashboard/aws-services", label: "AWS Services", icon: <SiAmazonwebservices /> },
   ];
+
+  const menu2 = [
+    { to: "/dashboard/cost-explorer", label: "Cost Explorer", icon: <TbClockDollar /> },
+    { to: "/dashboard/aws-services", label: "AWS Services", icon: <SiAmazonwebservices /> },
+  ];
+
+  const menu = role === "ADMIN" || role === "READONLY" ? menu1 : menu2;
 
   return (
     <div

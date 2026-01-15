@@ -3,8 +3,12 @@ import { CodeCopy } from "../CodeCopy/CodeCopy";
 import { code, code2 } from "../../../Data/Data";
 import { CopyRole } from "../CopyRole/CopyRole";
 import image1 from "../../../assets/IamImage1.png";
+import { useOutletContext } from "react-router-dom";
 
 export const Step1 = () => {
+
+  const{formData , setFormData} = useOutletContext();
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-3">
@@ -79,6 +83,32 @@ export const Step1 = () => {
       <div className="flex flex-col ">
         <label className="text-sm text-gray-600">Enter the IAM Role ARN <span className="text-red-500">*</span></label>
         < input 
+           value={formData.arnNumber}
+          onChange={(e) =>{
+            setFormData({...formData, arnNumber: e.target.value})
+          }}
+          className="h-11 w-[474px] border border-gray-300 rounded-md p-3" 
+          placeholder="Enter the IAM Role ARN"
+          />
+      </div>
+       <div className="flex flex-col ">
+        <label className="text-sm text-gray-600">Enter AWS Account Name <span className="text-red-500">*</span></label>
+        < input 
+          value={formData.accountName}
+          onChange={(e) =>{
+            setFormData({...formData, accountName: e.target.value})
+          }}
+          className="h-11 w-[474px] border border-gray-300 rounded-md p-3" 
+          placeholder="Enter the IAM Role ARN"
+          />
+      </div>
+       <div className="flex flex-col ">
+        <label className="text-sm text-gray-600">Enter AWS ID <span className="text-red-500">*</span></label>
+        < input 
+         value={formData.awsId}
+          onChange={(e) =>{
+            setFormData({...formData, awsId: e.target.value})
+          }}
           className="h-11 w-[474px] border border-gray-300 rounded-md p-3" 
           placeholder="Enter the IAM Role ARN"
           />
